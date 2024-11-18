@@ -24,3 +24,7 @@ func main() {
 }
 
 // can I give an expression to a constant?
+
+// getValue ok
+// GetValue ok
+// get_value X

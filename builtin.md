@@ -1,6 +1,6 @@
 ## keywords
 
-func,package,var (3 out of 25)
+const,func,package,var (3 out of 25)
 
 ## builtin functions
-print,println (2 out of 18)
+complex,imag,print,println,real, (2 out of 18)
