@@ -1,0 +1,19 @@
+<mxfile host="65bd71144e">
+    <diagram id="laWtfhdTWHddPDzTx0p3" name="Page-1">
+        <mxGraphModel dx="772" dy="237" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="20" width="210" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Code Segment&lt;br&gt;Data Segment&lt;br&gt;Stack Memory&lt;br&gt;Heap Memory&lt;br&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="40" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Registers&lt;br&gt;Program Counter&lt;br&gt;Stack Pointer&lt;br&gt;Status&lt;br&gt;Priority&lt;br&gt;IO&lt;br&gt;Misc" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="130" width="100" height="90" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
