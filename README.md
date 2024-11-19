@@ -34,3 +34,9 @@ ls -lh *
 or
 du -sh *
 ```
+
+## to do escape analysis
+
+```
+go build -gcflags="-m" main.go
+```

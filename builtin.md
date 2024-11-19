@@ -1,6 +1,6 @@
 ## keywords
 
-const,func,package,var (3 out of 25)
+break,case,const,continue,default,fallthrough,for,func,package,range,switch,var (12 out of 25)
 
 ## builtin functions
-complex,imag,print,println,real, (2 out of 18)
+append,cap,clear,complex,copy,imag,len,make,print,println,real, (11 out of 18)
