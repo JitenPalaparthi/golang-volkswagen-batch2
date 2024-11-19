@@ -23,4 +23,12 @@ func main() {
 		print(string(v), " ")
 	}
 
+	println()
+	rstr := ""
+
+	for _, v := range str2 {
+		rstr = string(v) + rstr
+	}
+	println(rstr)
+
 }
