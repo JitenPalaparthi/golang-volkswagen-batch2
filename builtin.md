@@ -1,6 +1,6 @@
 ## keywords
 
-break,case,const,continue,default,defer,fallthrough,for,func,goto,if,else,map,package,range,return,struct,switch,type,var (20  out of 25)
+break,case,chan,const,continue,default,defer,fallthrough,for,func,go,goto,if,import,interface,else,map,package,range,return,select,struct,switch,type,var (25  out of 25)
 
 ## builtin functions
-append,cap,clear,complex,copy,delete,imag,len,make,new,panic,print,println,real,recover (15 out of 18)
+append,cap,clear,close,complex,copy,delete,imag,len,make,max,min,new,panic,print,println,real,recover (18 out of 18)
