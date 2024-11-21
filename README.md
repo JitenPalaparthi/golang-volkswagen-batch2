@@ -40,3 +40,26 @@ du -sh *
 ```
 go build -gcflags="-m" main.go
 ```
+
+## to display all os and arch
+```
+go tool dist list
+```
+
+# cross compilation
+
+```
+GOOS=linux GOARCH=amd64 go build -o demo-linux  main.go
+```
+
+## go compile
+
+```
+go tool compile -o output.o main.go
+```
+
+## link 
+
+```
+go tool link -o demo output.o
+```

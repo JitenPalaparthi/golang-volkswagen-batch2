@@ -1,6 +1,9 @@
 package main
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
 	ch := make(chan int)
@@ -66,3 +69,7 @@ func myTimeAfter(d time.Duration) chan struct{} {
 // Future
 // Pipelines
 // Fanin, Fanout
+
+func greet() {
+	fmt.Println("hello wrold")
+}
