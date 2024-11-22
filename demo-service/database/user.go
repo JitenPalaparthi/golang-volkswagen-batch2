@@ -32,6 +32,19 @@ func (u *UserDB) GetUserBy(id string) (*models.User, error) {
 	return user, nil
 }
 
+func (u *UserDB) GetUsers(limit, offset int) ([]models.User, error) {
+	users := make([]models.User, 0)
+	tx := u.DB.Limit(limit).Offset(offset).Find(&users)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	// sdb, err := sql.Open("e", "")
+	// id := ""
+	//sdb.Query("select user.name, orders.name join orders on order.id=user.id where users.id=?", id)
+	//	u.DB.Table("users").Select("users.name,users.email,orders.id,orders.name").Joins("orders on orders.userid=users.id").Where("").Scan(&users)
+	return users, nil
+}
+
 func (u *UserDB) DeleteUserBy(id string) (int64, error) {
 	tx := u.DB.Delete(models.User{}, id)
 	if tx.Error != nil {

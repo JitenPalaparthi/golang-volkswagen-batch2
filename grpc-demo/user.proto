@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package user;
+
+option go_package="proto/userpb";
+
+message User{
+    int64 id = 1;
+    string name=2;
+    string email=3;
+    string status=4;
+    int64 lastModified=5;
+}
+
+message UserRequest{
+    string name=1;
+    string email=2;
+}
+
+message RandomResponse{
+    int64 num=1;
+}
+
+service UserService{
+    rpc CreateUser(UserRequest)returns(User);
+    rpc GenerateRandomNumber(google.protobuf.Empty)returns(stream RandomResponse);
+}
+
+//protoc --go_out=. --go-grpc_out=. user.proto

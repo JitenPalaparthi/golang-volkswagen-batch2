@@ -1,31 +1,33 @@
 package main
 
 import (
-	"demo/filedb"
+	"demo/database"
 	"demo/handlers"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	// DSN := os.Getenv("DB_CONN")
-	// if DSN == "" {
-	// 	DSN = `admin:admin@tcp(127.0.0.1:3306)/demodb?charset=utf8mb4&parseTime=True&loc=Local`
-	// }
+	DSN := os.Getenv("DB_CONN")
+	if DSN == "" {
+		DSN = `admin:admin@tcp(127.0.0.1:3306)/demodb?charset=utf8mb4&parseTime=True&loc=Local`
+	}
 
-	// db, err := database.GetConnection(DSN)
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
+	db, err := database.GetConnection(DSN)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	r := gin.Default()
 
-	//uhandler := &handlers.Userhandler{IUser: &database.UserDB{DB: db}}
-	uhandler := &handlers.Userhandler{IUser: &filedb.UserDB{FileName: "user.db"}}
+	uhandler := &handlers.Userhandler{IUser: &database.UserDB{DB: db}}
+	//uhandler := &handlers.Userhandler{IUser: &filedb.UserDB{FileName: "user.db"}}
 
 	r.POST("/user", uhandler.Create)
 	r.GET("/user/:id", uhandler.GetUserByID)
+	r.GET("/user/:limit/:offset", uhandler.GetUsersBy)
 	r.DELETE("/user/:id", uhandler.DeleteUserByID)
 
 	if err := r.Run(); err != nil {
@@ -47,3 +49,8 @@ func main() {
 	// fmt.Println(user)
 
 }
+
+// 9618558500
+
+// gRPC //open source project
+// protocol Buffers
