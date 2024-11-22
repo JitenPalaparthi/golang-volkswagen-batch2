@@ -1,0 +1,28 @@
+package main
+
+import (
+	_ "github.com/go-sql-driver/mysql"
+)
+
+//dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+
+func main() {
+
+	// dsn := "admin:admin@tcp(127.0.0.1:3306)/demodb?charset=utf8mb4&parseTime=True&loc=Local"
+	// db, err := sql.Open("mysql", dsn)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// // See "Important settings" section.
+	// db.SetConnMaxLifetime(time.Minute * 3)
+	// db.SetMaxOpenConns(10)
+	// db.SetMaxIdleConns(10)
+
+	// err = db.Ping()
+	// if err != nil {
+	// 	println(err.Error())
+	// }
+
+	// db.Exec("INSERT INTO TABLE users(name,email) values(?,?)", "jiten", "jitenp@outlook.com")
+}

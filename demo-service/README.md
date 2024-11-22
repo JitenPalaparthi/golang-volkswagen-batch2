@@ -10,7 +10,9 @@ docker run --name mysql -e MYSQL_ROOT_PASSWORD=admin123 -e
 ```
 docker run -d --name adminer -p 8089:8080 adminer
 ```
-To install mysql
+
+## To install mysql
+
 ```
 https://dev.mysql.com/downloads/
 ```
