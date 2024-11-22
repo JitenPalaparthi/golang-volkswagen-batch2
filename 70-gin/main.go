@@ -4,17 +4,27 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
+	"runtime"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 var (
-	PORT string
+	PORT        string
+	fileNameCh  chan string
+	fileNameSig chan struct{}
 )
 
+func init() {
+	fileNameCh = make(chan string)
+	fileNameSig = make(chan struct{})
+}
 func main() {
+
 	//args := os.Args
 	PORT = os.Getenv("PORT") // take from environment if not then take can commandline argument
 	if PORT == "" {
@@ -22,16 +32,21 @@ func main() {
 		flag.Parse()
 	}
 	r := gin.Default()
-	r.Use(Auth)
+	//r.Use(Auth)
+
+	r.MaxMultipartMemory = 8 << 20 // 8 MiB
 
 	r.GET("/ping", func(c *gin.Context) {
 		//c.JSON(http.StatusOK, gin.H{"message": "pong"})
 		c.String(http.StatusOK, "pong")
 	})
 
-	r.POST("/user/:id", CreateUser, PostProcess)
-
+	r.POST("/upload", uploadfile)
+	r.POST("/uploadname", uploadfileByName())
+	r.POST("/user/:id", CreateUser)
+	go SendUUID()
 	if err := r.Run(":" + PORT); err != nil {
+		runtime.Goexit()
 		Fatal(err)
 	}
 }
@@ -46,9 +61,10 @@ func Auth(c *gin.Context) {
 	c.Next()
 }
 
-func PostProcess(c *gin.Context) {
-
-}
+// func PostProcess(c *gin.Context) {
+// 	func() { ch <- string(uuid.New().String()) }()
+// 	c.Next()
+// }
 
 func CreateUser(c *gin.Context) {
 	id := c.Param("id")
@@ -109,4 +125,69 @@ func WriteToFile(fileName string, data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func uploadfile(c *gin.Context) {
+	// single file
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+		c.Abort()
+		return
+	}
+	//log.Println(file.Filename)
+	// Upload the file to specific dst.
+	err = c.SaveUploadedFile(file, "images/"+file.Filename)
+	if err != nil {
+		c.String(http.StatusBadRequest, err.Error())
+		c.Abort()
+		return
+	}
+	c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", file.Filename))
+}
+
+func uploadfileByName() func(*gin.Context) {
+	go func() {
+		fileNameSig <- struct{}{}
+	}()
+	return func(c *gin.Context) {
+		// single file
+		file, err := c.FormFile("file")
+		if err != nil {
+			c.String(http.StatusBadRequest, err.Error())
+			c.Abort()
+			return
+		}
+		//log.Println(file.Filename)
+		// Upload the file to specific dst.
+		err = c.SaveUploadedFile(file, "images/"+<-fileNameCh)
+		if err != nil {
+			c.String(http.StatusBadRequest, err.Error())
+			c.Abort()
+			return
+		}
+		c.String(http.StatusOK, fmt.Sprintf("'%s' uploaded!", file.Filename))
+	}
+}
+
+func uploadfiles(c *gin.Context) {
+	form, _ := c.MultipartForm()
+	files := form.File["upload[]"]
+
+	for _, file := range files {
+		log.Println(file.Filename)
+
+		// Upload the file to specific dst.
+		c.SaveUploadedFile(file, "/images"+file.Filename)
+	}
+	c.String(http.StatusOK, fmt.Sprintf("%d files uploaded!", len(files)))
+}
+
+func SendUUID() {
+	for {
+		select {
+		case <-fileNameSig:
+			fileNameCh <- uuid.New().String()
+		}
+	}
 }
